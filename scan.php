@@ -25,13 +25,13 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $output = curl_exec($ch); 
 curl_close($ch); 
 
-preg_match_all('/"(.*?)"/', $output, $hasil);
-echo "\n";	
+$hasil = json_decode($output, true);
+echo "\n";
 
-if (count($hasil[1]) == 0) {
-	echo $red . "Wrong input or site doesn't have a subdomain! $clear \n";
+if ($hasil == null) {
+	echo $red . "Wrong input or site doesn't have subdomain! $clear \n";
 } else {
-	foreach($hasil[1] as $key => $list) {
+	foreach($hasil as $key => $list) {
 	    echo $key+1 . ". " . $list . "\n";
 	    $fp = fopen('result.txt', 'a+');
 		fwrite($fp, $list."\n");
