@@ -1,2 +1,2 @@
 # subdoscan
-Mass Subdomain Scanner Tool
+Mass Subdomain Scanner using API https://sonar.omnisint.io/subdomains/
