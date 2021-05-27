@@ -1,2 +1,2 @@
 # subdoscan
-Subdomain Scanner Tool
+Mass Subdomain Scanner Tool
