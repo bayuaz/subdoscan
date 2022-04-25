@@ -2,8 +2,10 @@
 
 error_reporting(0);
 
+include "warna.php";
+
 function banner() {
-	include 'warna.php';
+	global $clear, $merah, $hijau;
 
 	echo $hijau;
 	echo "   ____     __      __                _\n";
@@ -22,7 +24,7 @@ function banner() {
 }
 
 function menu() {
-	include 'warna.php';
+	global $clear, $merah, $kuning, $cyan;
 
 	echo "\n\n{$cyan}1. Single List";
 	echo "\n2. Multi List";
@@ -39,9 +41,9 @@ function menu() {
 }
 
 function singleList() {
-	include 'warna.php';
+	global $clear, $merah, $cyan;
 
-	echo "URL (ex: site.com): ";
+	echo "{$clear}URL (ex: site.com): ";
 	$input = trim(fgets(STDIN));
 
 	$ch = curl_init(); 
@@ -53,7 +55,7 @@ function singleList() {
 	$hasil = json_decode($output, true);
 	echo "\n$clear";
 
-	if (is_null($hasil)) {
+	if (empty($hasil)) {
 		echo "{$merah}Wrong input or site doesn't have subdomain!{$clear}\n";
 	} else {
 		foreach ($hasil as $no => $list) {
@@ -68,9 +70,9 @@ function singleList() {
 }
 
 function multipleList() {
-	include 'warna.php';
+	global $clear, $merah, $cyan;
 
-	echo "Masukkan list: ";
+	echo "{$clear}Masukkan file list (ext: list.txt): ";
 	$input = trim(fgets(STDIN));
 	$site = explode(PHP_EOL, file_get_contents($input));
 
