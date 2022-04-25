@@ -1,2 +1,0 @@
-site.com
-www.site.com

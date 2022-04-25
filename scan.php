@@ -8,13 +8,13 @@ function banner() {
 	global $clear, $merah, $hijau;
 
 	echo $hijau;
-	echo "   ____     __      __                _\n";
-	echo "  / __/_ __/ /  ___/ /__  __ _  ___ _(_)__\n";
-	echo " _\ \/ // / _ \/ _  / _ \/  ' \/ _ `/ / _ \ \n";
-	echo "/___/\_,_/_.__/\_,_/\___/_/_/_/\_,_/_/_//_/\n";
-	echo "  / __/______ ____  ___  ___ ____\n";
-	echo " _\ \/ __/ _ `/ _ \/ _ \/ -_) __/\n";         
-	echo "/___/\__/\_,_/_//_/_//_/\__/_/\n\n";
+	echo "   ____     __      __                _" . PHP_EOL;
+	echo "  / __/_ __/ /  ___/ /__  __ _  ___ _(_)__" . PHP_EOL;
+	echo " _\ \/ // / _ \/ _  / _ \/  ' \/ _ `/ / _ \ " . PHP_EOL;
+	echo "/___/\_,_/_.__/\_,_/\___/_/_/_/\_,_/_/_//_/" . PHP_EOL;
+	echo "  / __/______ ____  ___  ___ ____" . PHP_EOL;
+	echo " _\ \/ __/ _ `/ _ \/ _ \/ -_) __/" . PHP_EOL;         
+	echo "/___/\__/\_,_/_//_/_//_/\__/_/" . PHP_EOL . PHP_EOL;
 
 	echo $merah;
 	echo "    Coded by Khatulistiwa";
@@ -26,9 +26,9 @@ function banner() {
 function menu() {
 	global $clear, $merah, $kuning, $cyan;
 
-	echo "\n\n{$cyan}1. Single List";
-	echo "\n2. Multi List";
-	echo "\n\n{$kuning}Masukkan pilihan: ";
+	echo PHP_EOL . PHP_EOL . "{$cyan}1. Single List";
+	echo PHP_EOL . "2. Multi List";
+	echo PHP_EOL . PHP_EOL . "{$kuning}Masukkan pilihan: ";
 	$pilih = trim(fgets(STDIN));
 
 	if ($pilih == 1) {
@@ -36,7 +36,7 @@ function menu() {
 	} else if ($pilih == 2) {
 		multipleList();
 	} else {
-		echo "\n{$merah}Pilihan anda tidak valid!{$clear}\n";
+		echo PHP_EOL . "{$merah}Pilihan anda tidak valid!{$clear}" . PHP_EOL;
 	}
 }
 
@@ -53,31 +53,31 @@ function singleList() {
 	curl_close($ch);
 
 	$hasil = json_decode($output, true);
-	echo "\n$clear";
+	echo PHP_EOL . "$clear";
 
-	if (empty($hasil)) {
-		echo "{$merah}Wrong input or site doesn't have subdomain!{$clear}\n";
+	if (empty($hasil) || isset($hasil['error'])) {
+		echo "{$merah}Wrong input or site doesn't have subdomain!{$clear}" . PHP_EOL;
 	} else {
 		foreach ($hasil as $no => $list) {
-		    echo $no+1 . ". $list\n";
+		    echo $no+1 . ". $list" . PHP_EOL;
 		    $fp = fopen("./result/single/$input.txt", 'a+');
-			fwrite($fp, "$list\n");
+			fwrite($fp, "$list" . PHP_EOL);
 			fclose($fp);
 		}
 
-		echo "\n{$cyan}Saved in ./result/single/$input.txt!{$clear}\n";
+		echo PHP_EOL . "{$cyan}Saved in ./result/single/$input.txt!{$clear}" . PHP_EOL;
 	}
 }
 
 function multipleList() {
-	global $clear, $merah, $cyan;
+	global $clear, $merah, $hijau, $kuning, $cyan;
 
 	echo "{$clear}Masukkan file list (ext: list.txt): ";
 	$input = trim(fgets(STDIN));
 	$site = explode(PHP_EOL, file_get_contents($input));
 
 	if (!file_exists($input)) {
-		die("\n{$merah}File tidak ada!{$clear}\n");
+		die(PHP_EOL . "{$merah}File tidak ada!{$clear}" . PHP_EOL);
 	} else {
 		foreach ($site as $no => $target) {
 			$ch = curl_init(); 
@@ -87,22 +87,22 @@ function multipleList() {
 			curl_close($ch);
 
 			$hasil = json_decode($output, true);
-			echo "$clear\n";
+			echo "$clear" . PHP_EOL;
 
-			if (is_null($hasil)) {
-				echo "{$merah}$target : site doesn't have subdomain!{$clear}\n";
+			if (empty($hasil) || isset($hasil['error'])) {
+				echo "{$clear}" . ++$no . ". {$target} {$kuning}--> {$merah}site doesn't have subdomain!{$clear}" . PHP_EOL;
 			} else {
-				echo "{$clear}" . ++$no . ". $target ==> ".count($hasil)." subdomains {$cyan}(Saved in ./result/multiple/$target.txt!){$clear}";
+				echo "{$clear}" . ++$no . ". {$target} {$kuning}--> {$hijau}" . count($hasil) . " subdomains {$cyan}(Saved in ./result/multiple/$target.txt!){$clear}";
 
 				foreach ($hasil as $list) {
 				    $fp = fopen("./result/multiple/$target.txt", 'a+');
-					fwrite($fp, "$list\n");
+					fwrite($fp, "$list" . PHP_EOL);
 					fclose($fp);
 				}
 			}
 		}
 
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 
