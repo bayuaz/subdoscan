@@ -60,6 +60,8 @@ function singleList() {
 	} else {
 		foreach ($hasil as $no => $list) {
 		    echo $no+1 . ". $list" . PHP_EOL;
+
+		    # save result
 		    $fp = fopen("./result/single/$input.txt", 'a+');
 			fwrite($fp, "$list" . PHP_EOL);
 			fclose($fp);
@@ -95,6 +97,7 @@ function multipleList() {
 				echo "{$clear}" . ++$no . ". {$target} {$kuning}--> {$hijau}" . count($hasil) . " subdomains {$cyan}(Saved in ./result/multiple/$target.txt!){$clear}";
 
 				foreach ($hasil as $list) {
+					# save result
 				    $fp = fopen("./result/multiple/$target.txt", 'a+');
 					fwrite($fp, "$list" . PHP_EOL);
 					fclose($fp);
