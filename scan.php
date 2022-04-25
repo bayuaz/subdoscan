@@ -72,7 +72,7 @@ function singleList() {
 function multipleList() {
 	global $clear, $merah, $hijau, $kuning, $cyan;
 
-	echo "{$clear}Masukkan file list (ext: list.txt): ";
+	echo "{$clear}Masukkan file list (ex: list.txt): ";
 	$input = trim(fgets(STDIN));
 	$site = explode(PHP_EOL, file_get_contents($input));
 
